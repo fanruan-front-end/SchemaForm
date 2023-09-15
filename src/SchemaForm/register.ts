@@ -1,10 +1,14 @@
-export type SchemaFormComponent = (props: {
-  value: any;
-  onChange: (value: any) => void;
-}) => JSX.Element;
+import { FormComponentProps } from "./SchemaForm";
+
+export type SchemaFormComponent<T = any> = (
+  props: FormComponentProps<T>
+) => JSX.Element;
 
 export class SchemaFormRegister {
-  private components: Map<string, SchemaFormComponent> = new Map();
+  private components: Map<string, SchemaFormComponent>;
+  public constructor(components: Map<string, SchemaFormComponent>) {
+    this.components = components;
+  }
 
   public register(name: string, component: SchemaFormComponent) {
     this.components.set(name, component);
@@ -15,4 +19,4 @@ export class SchemaFormRegister {
   }
 }
 
-export const schemaFormRegister = new SchemaFormRegister();
+export const schemaFormRegister = new SchemaFormRegister(new Map());

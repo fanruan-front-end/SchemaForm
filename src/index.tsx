@@ -7,6 +7,8 @@ import { Input } from "./input";
 interface ConfigPanelValue {
   a: string;
   b: string;
+  c: string;
+  d: string;
 }
 schemaFormRegister.register("input", Input);
 const Schema: ConfigPanelSchema<ConfigPanelValue>[] = [
@@ -34,10 +36,32 @@ const Schema: ConfigPanelSchema<ConfigPanelValue>[] = [
       return true;
     },
   },
+  {
+    type: "group",
+    label: "",
+    widgetOptions: {
+      direction: "row",
+    },
+    children: [
+      {
+        type: "input",
+        key: "c",
+      },
+      {
+        type: "input",
+        key: "d",
+      },
+    ],
+  },
 ];
 
 function App() {
-  const [value, setValue] = useState<ConfigPanelValue>({ a: "1", b: "2" });
+  const [value, setValue] = useState<ConfigPanelValue>({
+    a: "1",
+    b: "2",
+    c: "3",
+    d: "4",
+  });
   return (
     <>
       <div>
@@ -45,11 +69,19 @@ function App() {
         <div>当 a 变成 10 时隐藏 b</div>
         <div>-------</div>
       </div>
-      <ConfigPanel
-        value={value}
-        schema={Schema}
-        onChange={setValue}
-      ></ConfigPanel>
+      <div
+        style={{
+          width: "400px",
+        }}
+      >
+        <ConfigPanel
+          value={value}
+          schema={Schema}
+          onChange={setValue}
+        ></ConfigPanel>
+      </div>
+      <div>-------</div>
+      <div>{JSON.stringify(value)}</div>
     </>
   );
 }
